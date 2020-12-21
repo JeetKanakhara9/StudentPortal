@@ -27,12 +27,12 @@ public class Courses implements Serializable {
     @JoinTable(name="Course_Prereq",
             joinColumns={@JoinColumn(name="course_id")},
             inverseJoinColumns={@JoinColumn(name="pre_id")})
-    private List<Courses> Prereq = (List<Courses>) new ArrayList<Courses>();
+    private List<Courses> Prereq = new ArrayList<Courses>();
 
     @ManyToMany(mappedBy="Prereq")
     private List<Courses> pre_course = new ArrayList<Courses>();
 
-
+    @JsonbTransient
     public List<Courses> getPrereq() {
         return Prereq;
     }

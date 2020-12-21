@@ -22,40 +22,6 @@ public class StudentDaoImpl implements StudentDao {
 
             for (final Object fetch : query.list()) {
                 Students s=(Students) fetch;
-                //System.out.print(f1.getStudent_id());
-                //System.out.print(f1.getFirst_name());
-                List<Courses> courses=new ArrayList<Courses>();
-
-                List<Courses> allcourses=s.getCourses();
-                for(Courses c :allcourses) {
-                    List<Courses> eligible_course =c.getPrereq();
-                    //System.out.println(eligible_course.size());
-                    for(Courses e:eligible_course) {
-                        List<Courses> allpre=e.getPre_course();
-                        int f=0;
-                        for(Courses all:allpre) {
-                            //System.out.println(all.getDescription());
-
-                            for(Courses ch:allcourses)
-                            {
-                                if(all.getCourse_id()==ch.getCourse_id())
-                                    f++;
-                            }
-
-                        }
-                       // System.out.println(f);
-                        //System.out.println(allpre.size());
-                        if(f==allpre.size())
-                        {
-                           // System.out.println(e.getDescription());
-                            courses.add(e);
-                        }
-
-                    }
-
-                }
-               // for(Courses c: courses)
-                 //   System.out.println(c.getDescription());
                 return (Students) fetch;
             }
         } catch (HibernateException exception) {

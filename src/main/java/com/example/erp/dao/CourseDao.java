@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseDao {
 
-    public boolean registerCourse(Courses course);
+    public boolean registerCourse(List<Integer> id);
     public List<Courses> getCourses(Students student);
     public Courses getCourseByID(Integer id);
 }

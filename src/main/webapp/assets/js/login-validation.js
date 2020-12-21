@@ -30,6 +30,7 @@ login_form.addEventListener('submit', async (e) => {
             console.log(st_id);
             //System.Out.println()
             location.href = "dashboard.html";
+
         }
         catch(err){
             document.getElementById("submit-button").style.display = "block";

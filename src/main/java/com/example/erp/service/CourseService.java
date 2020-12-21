@@ -10,8 +10,8 @@ import java.util.List;
 public class CourseService {
 
     CourseDao courseDao = new CourseDaoImpl();
-    public boolean registerCourse(Courses course){
-        return courseDao.registerCourse(course);
+    public boolean registerCourse(List<Integer> id){
+        return courseDao.registerCourse(id);
     }
 
     public List<Courses> getCourses (Students student){
