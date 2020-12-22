@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        .button {
+            background-color: #008CBA; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Students - Courses</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/form-validation.css" rel="stylesheet">
+
 </head>
 <body class="bg-light">
 <!--<div class="container">-->
@@ -97,6 +112,7 @@
 <!--    </div>-->
 <!--</div>-->
 <table class="table table-striped">
+    <caption>Student Details</caption>
     <tr  class="bg-info">
         <th>Student_ID</th>
         <th>First_Name</th>
@@ -111,6 +127,7 @@
 <br>
 <br>
 <table class="table table-striped">
+    <caption>Courses Already Completed By Student</caption>
     <tr  class="bg-info">
         <th>Course_ID</th>
         <th>Course_Name</th>
@@ -126,19 +143,21 @@
 <br>
 <br>
 <table class="table table-striped">
+    <caption>Courses Available for Student to select</caption>
     <tr  class="bg-info">
         <th>Course_ID</th>
         <th>Course_Name</th>
         <th>Course_Description</th>
         <th>Course_Credit</th>
         <th>Course_Code</th>
+        <th>Select</th>
     </tr>
 
     <tbody id="myTable">
 
     </tbody>
 </table>
-<button id="select">Select courses </button>
+<button id="select" class="button" >Select courses </button>
 <footer class="my-5 pt-5 text-muted text-center text-small">
 </footer>
 

@@ -64,87 +64,87 @@ window.onload=fetch_studentdata();
 //     }
 //     course_form.classList.add('was-validated');
 // };
-async  function fetch_studentdata()
-{
-    let response=await fetch('api/students/get_data',{
-        method: 'POST',
-        headers: {
-            'Content-Type':'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({
-            student_id:sessionStorage.getItem('id'),
-        })
-    });
-    let student=await response.json();
-    console.log(student);
-    let response1=await fetch('api/students/get_courses',{
-        method: 'POST',
-        headers: {
-            'Content-Type':'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({
-            student_id:sessionStorage.getItem('id'),
-        })
-    });
-    let courses=await response1.json();
-    console.log(courses);
-    buildTable1(student);
-
-    function buildTable1(student) {
-        function f1(id) {
-            console.log(id);
-        }
-
-        var table = document.getElementById('Student_table')
-        console.log(student.student_id);
-        console.log(student.first_name);
-        console.log(student.last_name);
-        console.log(student.credits);
-
-
-       // for (var i = 0; i <=student.length; i++) {
-         //   console.log(student[i].student_id);
-            //console.log(student[i].first_name);
-            //console.log(student[i].last_name);
-            //console.log(student[i].credits);
-
-            var row = `<tr>
-							<td>${student.student_id}</td>
-							<td>${student.first_name}</td>
-							<td>${student.last_name}</td>
-							<td>${student.credits}</td>
-							</tr>`
-            table.innerHTML += row
-
-
-       // }
-    }
-    buildTable2(courses);
-    function buildTable2(courses) {
-        function f2(id) {
-            console.log(id);
-        }
-
-        var table = document.getElementById('Student_courses')
-
-        for (var i = 0; i < courses.length; i++){
-            var row = `<tr>
-							<td>${courses[i].course_id}</td>
-							<td>${courses[i].name}</td>
-							<td>${courses[i].description}</td>
-							<td>${courses[i].credits}</td>
-							<td>${courses[i].course_code}</td>
-                            
-					  </tr>`
-            table.innerHTML += row
-
-
-        }
-
-    }
-
-
-    }
+// async  function fetch_studentdata()
+// {
+//     let response=await fetch('api/students/get_data',{
+//         method: 'POST',
+//         headers: {
+//             'Content-Type':'application/json;charset=utf-8'
+//         },
+//         body: JSON.stringify({
+//             student_id:sessionStorage.getItem('id'),
+//         })
+//     });
+//     let student=await response.json();
+//     console.log(student);
+//     let response1=await fetch('api/students/get_courses',{
+//         method: 'POST',
+//         headers: {
+//             'Content-Type':'application/json;charset=utf-8'
+//         },
+//         body: JSON.stringify({
+//             student_id:sessionStorage.getItem('id'),
+//         })
+//     });
+//     let courses=await response1.json();
+//     console.log(courses);
+//     buildTable1(student);
+//
+//     function buildTable1(student) {
+//         function f1(id) {
+//             console.log(id);
+//         }
+//
+//         var table = document.getElementById('Student_table')
+//         console.log(student.student_id);
+//         console.log(student.first_name);
+//         console.log(student.last_name);
+//         console.log(student.credits);
+//
+//
+//        // for (var i = 0; i <=student.length; i++) {
+//          //   console.log(student[i].student_id);
+//             //console.log(student[i].first_name);
+//             //console.log(student[i].last_name);
+//             //console.log(student[i].credits);
+//
+//             var row = `<tr>
+// 							<td>${student.student_id}</td>
+// 							<td>${student.first_name}</td>
+// 							<td>${student.last_name}</td>
+// 							<td>${student.credits}</td>
+// 							</tr>`
+//             table.innerHTML += row
+//
+//
+//        // }
+//     }
+//     buildTable2(courses);
+//     function buildTable2(courses) {
+//         function f2(id) {
+//             console.log(id);
+//         }
+//
+//         var table = document.getElementById('Student_courses')
+//
+//         for (var i = 0; i < courses.length; i++){
+//             var row = `<tr>
+// 							<td>${courses[i].course_id}</td>
+// 							<td>${courses[i].name}</td>
+// 							<td>${courses[i].description}</td>
+// 							<td>${courses[i].credits}</td>
+// 							<td>${courses[i].course_code}</td>
+//
+// 					  </tr>`
+//             table.innerHTML += row
+//
+//
+//         }
+//
+//     }
+//
+//
+//     }
 async function fetch_courses(){
     //console.log(sessionStorage.getItem('id'));
     let response = await fetch('api/courses/get', {
@@ -198,27 +198,112 @@ async function fetch_courses(){
 
             }
         }
-        // if(c<4)
-        //     alert('Please select 4 courses');
-        localStorage.setItem("cid", JSON.stringify(cid));
-        var retrievedData = localStorage.getItem("cid");
-        //console.log(retrievedData);
-        /*var cid2 = JSON.parse(retrievedData);
-        for(var i=0;i<cid2.length;i++)
-            console.log(cid2[i])*/
-        let response1 = await fetch('api/courses/register_course', {
+         if(c<4)
+            alert('Please select 4 courses');
+         else {
+             localStorage.setItem("cid", JSON.stringify(cid));
+             var retrievedData = localStorage.getItem("cid");
+             //console.log(retrievedData);
+             /*var cid2 = JSON.parse(retrievedData);
+             for(var i=0;i<cid2.length;i++)
+                 console.log(cid2[i])*/
+             let response1 = await fetch('api/courses/register_course', {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json;charset=utf-8'
+                 },
+                 body: JSON.stringify({
+                     student_id: sessionStorage.getItem('id'),
+                     cid: localStorage.getItem("cid"),
+                 })
+             });
+             window.location.reload();
+         }
+
+    }
+
+    async  function fetch_studentdata()
+    {
+        let response=await fetch('api/students/get_data',{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type':'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                student_id: sessionStorage.getItem('id'),
-                cid:localStorage.getItem("cid"),
+                student_id:sessionStorage.getItem('id'),
             })
         });
+        let student=await response.json();
+        console.log(student);
+        let response1=await fetch('api/students/get_courses',{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                student_id:sessionStorage.getItem('id'),
+            })
+        });
+        let courses=await response1.json();
+        console.log(courses);
+        buildTable1(student);
+
+        function buildTable1(student) {
+            function f1(id) {
+                console.log(id);
+            }
+
+            var table = document.getElementById('Student_table')
+            console.log(student.student_id);
+            console.log(student.first_name);
+            console.log(student.last_name);
+            console.log(student.credits);
+
+
+            // for (var i = 0; i <=student.length; i++) {
+            //   console.log(student[i].student_id);
+            //console.log(student[i].first_name);
+            //console.log(student[i].last_name);
+            //console.log(student[i].credits);
+
+            var row = `<tr>
+							<td>${student.student_id}</td>
+							<td>${student.first_name}</td>
+							<td>${student.last_name}</td>
+							<td>${student.credits}</td>
+							</tr>`
+            table.innerHTML += row
+
+
+            // }
+        }
+        buildTable2(courses);
+        function buildTable2(courses) {
+            function f2(id) {
+                console.log(id);
+            }
+
+            var table = document.getElementById('Student_courses')
+
+            for (var i = 0; i < courses.length; i++){
+                var row = `<tr>
+							<td>${courses[i].course_id}</td>
+							<td>${courses[i].name}</td>
+							<td>${courses[i].description}</td>
+							<td>${courses[i].credits}</td>
+							<td>${courses[i].course_code}</td>
+                            
+					  </tr>`
+                table.innerHTML += row
+
+
+            }
+
+        }
 
 
     }
+    fetch_studentdata();
     // let courses_option = document.getElementById('courses');
     // courses_option.innerHTML = '<option value=""> Choose...</option>';
     //
