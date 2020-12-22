@@ -17,8 +17,8 @@ login_form.addEventListener('submit', async (e) => {
         });
         try{
             let result = await response.json();
-             console.log(result);
-            console.log(response);
+            // console.log(result);
+            //console.log(response);
        // if(result['status'] === 200){
          //   let data = response.json();
             document.getElementById("submit-button").style.display = "block";
@@ -27,7 +27,7 @@ login_form.addEventListener('submit', async (e) => {
             sessionStorage.setItem('id', result["student_id"]);
             //console.log(data);
             var st_id=sessionStorage.getItem('id');
-            console.log(st_id);
+           // console.log(st_id);
             //System.Out.println()
             location.href = "dashboard.html";
 

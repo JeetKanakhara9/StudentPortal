@@ -31,67 +31,46 @@ public class StudentDaoImpl implements StudentDao {
         return null;
     }
 
-   /* @Override
-    public Students emailVerify(Students student) {
-        Session session = SessionUtil.getSession();
-        try {
+    @Override
+    public Students getdata(Students student) {
+        try (Session session = SessionUtil.getSession()) {
+            Query query = session.createQuery("from Students where student_id=:id");
+            query.setParameter("id", student.getStudent_id());
 
-            Query query = session.createQuery("select student_id from Students where email=:email");
-            query.setParameter("email", student.getEmail());
-            List<Integer> id = query.getResultList();
-            if (id.size() == 1) {
-                //System.out.println(student.getCourses());
-                Query q1 = session.createQuery("from Students where student_id=:i");
-                q1.setParameter("i", id.get(0));
-                Students s = (Students)q1.uniqueResult();
-               /*for (Courses c:s.getCourses()) {
-                   System.out.println(c.getCourse_id());
-                   System.out.println(c.getCourse_code());aksh
-                   System.out.println(c.getDescription());
-               }*/
-              /* List<Courses> allcourses=s.getCourses();
-               for(Courses c :allcourses) {
-                   List<Courses> eligible_course =c.getPrereq();
-                   //System.out.println(eligible_course.size());
-                   for(Courses e:eligible_course) {
-                       List<Courses> allpre=e.getPre_course();
-                       int f=0;
-                       for(Courses all:allpre) {
-                           //System.out.println(all.getDescription());
+            for (final Object fetch : query.list()) {
+                Students s=(Students) fetch;
+                return (Students) fetch;
+            }
+        } catch (HibernateException exception) {
+            System.out.print(exception.getLocalizedMessage());
+            return null;
+        }
 
-                           for(Courses ch:allcourses)
-                           {
-                               if(all.getCourse_id()==ch.getCourse_id())
-                                   f++;
-                           }
+        return null;
+    }
 
-                       }
-                       System.out.println(f);
-                       System.out.println(allpre.size());
-                       if(f==allpre.size())
-                       {
-                           System.out.println(e.getDescription());
-                       }
-
-                   }
-
-               }*/
-
-
-                //return s;
-           // }
-
-
-
-//        catch (HibernateException exception) {
-//            System.out.print(exception.getLocalizedMessage());
+    @Override
+    public List<Courses> getCourse(Students student) {
+        try (Session session = SessionUtil.getSession()) {
+            Query query = session.createQuery("from Students where student_id=:id");
+            query.setParameter("id", student.getStudent_id());
+            Students s= (Students) query.uniqueResult();
+            List<Courses> courses=s.getCourses();
+            return courses;
+//            for (final Object fetch : query.list()) {
+//                Students s=(Students) fetch;
+//                List<Courses> courses=s.getCourses();
+//                return courses;
 //
-//            return null;
-//        }finally {
-//            session.close();
-//        }
-//        return null;
-//    }
+//            }
+        } catch (HibernateException exception) {
+            System.out.print(exception.getLocalizedMessage());
+            return null;
+        }
+
+
+        //return null;
+    }
 
     @Override
     public boolean registerStudent(Students student) {

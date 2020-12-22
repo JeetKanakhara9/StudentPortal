@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Path("students")
 public class StudentsController {
@@ -42,5 +43,37 @@ public class StudentsController {
 
         return Response.ok().entity(result).build();
     }
+
+    @POST
+    @Path("/get_data")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getStudent_Data(Students student) throws URISyntaxException {
+        Students result = studentService.getdata(student);
+        System.out.println(result.getStudent_id());
+
+        if(result == null){
+            return Response.noContent().build();
+        }
+
+        return Response.ok().entity(result).build();
+    }
+
+    @POST
+    @Path("/get_courses")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCourses(Students student) throws URISyntaxException {
+        List<Courses> course = studentService.getCourse(student);
+       // System.out.println(result.getStudent_id());
+
+        if(course == null){
+            return Response.noContent().build();
+        }
+
+        return Response.ok().entity(course).build();
+    }
+
+
 }
 

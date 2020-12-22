@@ -19,7 +19,7 @@ public class Students implements Serializable {
     private String email;
     private int credits;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Student_Courses", joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id")})
     private List<Courses> courses;
