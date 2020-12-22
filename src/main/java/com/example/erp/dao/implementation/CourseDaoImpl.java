@@ -32,6 +32,8 @@ public class CourseDaoImpl implements CourseDao {
 
                 //List<Courses> s_c=s.getCourses();
                 for (int i = 1; i < id.size(); i++) {
+                    System.out.println("ID in Dao");
+                    System.out.println(id.get(i));
                     Query q1 = session.createQuery("from Courses where course_id=:cid");
                     q1.setParameter("cid", id.get(i));
                     //Courses c=(Courses) q1.getResultList();
@@ -76,29 +78,45 @@ public class CourseDaoImpl implements CourseDao {
             Students s= (Students) query.uniqueResult();
             List<Courses> allcourses=s.getCourses();
             System.out.println("All Courses ");
-            for(Courses a1:allcourses)
-                System.out.println(a1.getDescription());
+            //for(Courses a1:allcourses)
+               // System.out.println(a1.getDescription());
             for(Courses c :allcourses) {
                 List<Courses> eligible_course =c.getPre_course();
-                System.out.println("Eligible courses for " + c.getDescription());
+                //System.out.println("Eligible courses for " + c.getDescription());
                 for(Courses e : eligible_course)
                     System.out.println(e.getDescription());
                 for(Courses e:eligible_course) {
                     List<Courses> allpre=e.getPrereq();
-                    System.out.println("Prereq courses for " + e.getDescription());
+                   // System.out.println("Prereq courses for " + e.getDescription());
                     for(Courses p : allpre)
-                        System.out.println(p.getDescription());
+                      //  System.out.println(p.getDescription());
 
                         if(allcourses.containsAll(allpre)){
-                            System.out.println("Contains all pre");
+                            //System.out.println("Contains all pre");
                             if(!allcourses.contains(e)&&!courses.contains(e)) {
-                                System.out.println("allcourses does not contain " + e.getDescription());
+                               // System.out.println("allcourses does not contain " + e.getDescription());
                                 courses.add(e);
                             }
                     }
 
                 }
 
+            }
+            Query q2=session.createQuery("from Courses");
+            List<Courses> c_all= q2.getResultList();
+            System.out.println("Size of all courses in DB : "+ c_all.size());
+            for(Courses c:c_all)
+            {
+//                System.out.println("Course  "+c.getDescription());
+//                System.out.println("Prereq Course ");
+                List<Courses> pid=c.getPrereq();
+//                for(Courses p:pid)
+//                    System.out.println(p.getCourse_id());
+                if(pid.size()==1&&pid.get(0).getCourse_id()==-1)
+                {
+                    if(!courses.contains(c)&&!allcourses.contains(c))
+                        courses.add(c);
+                }
             }
         }
 
