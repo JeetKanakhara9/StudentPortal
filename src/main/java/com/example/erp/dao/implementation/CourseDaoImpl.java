@@ -75,28 +75,26 @@ public class CourseDaoImpl implements CourseDao {
             query.setParameter("id", student.getStudent_id());
             Students s= (Students) query.uniqueResult();
             List<Courses> allcourses=s.getCourses();
+            System.out.println("All Courses ");
+            for(Courses a1:allcourses)
+                System.out.println(a1.getDescription());
             for(Courses c :allcourses) {
                 List<Courses> eligible_course =c.getPre_course();
-                //System.out.println(eligible_course.size());
+                System.out.println("Eligible courses for " + c.getDescription());
+                for(Courses e : eligible_course)
+                    System.out.println(e.getDescription());
                 for(Courses e:eligible_course) {
                     List<Courses> allpre=e.getPrereq();
-                    int f=0;
-                    for(Courses all:allpre) {
-                        //System.out.println(all.getDescription());
+                    System.out.println("Prereq courses for " + e.getDescription());
+                    for(Courses p : allpre)
+                        System.out.println(p.getDescription());
 
-                        for(Courses ch:allcourses)
-                        {
-                            if(all.getCourse_id()==ch.getCourse_id())
-                                f++;
-                        }
-
-                    }
-                    // System.out.println(f);
-                    //System.out.println(allpre.size());
-                    if(f==allpre.size())
-                    {
-                        // System.out.println(e.getDescription());
-                        courses.add(e);
+                        if(allcourses.containsAll(allpre)){
+                            System.out.println("Contains all pre");
+                            if(!allcourses.contains(e)&&!courses.contains(e)) {
+                                System.out.println("allcourses does not contain " + e.getDescription());
+                                courses.add(e);
+                            }
                     }
 
                 }
@@ -107,10 +105,7 @@ public class CourseDaoImpl implements CourseDao {
         catch (HibernateException exception) {
             System.out.print(exception.getLocalizedMessage());
         }
-        //for(Courses c:courses)
-        //  System.out.println(c.getDescription());
-        //Set<Courses> c1=new HashSet<Courses>(courses);
-        //c1.addAll(courses);
+
 
         return courses;
     }
